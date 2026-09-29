@@ -1,0 +1,310 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import icon from '../assets/app-icon.svg';
+import androidAccents from '../assets/screens/android-accents.png';
+import androidSpace from '../assets/screens/android-space-language.png';
+import androidNextWord from '../assets/screens/android-next-word.png';
+import iosKeyboard from '../assets/screens/ios-keyboard.png';
+import iosLanguages from '../assets/screens/ios-languages.png';
+import iosDictionaries from '../assets/screens/ios-dictionaries.png';
+import iosClipboard from '../assets/screens/ios-clipboard.png';
+import iosSpace from '../assets/screens/ios-space-language.png';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Only what the app does today. Keep in step with the app's board (app: .ai/kanban).
+const features = [
+  {
+    title: 'What you type stays on your phone',
+    text: 'Nothing you type is sent anywhere. Typing works fully offline, and nothing is learned from password or incognito fields.',
+  },
+  {
+    title: 'Several languages on one keyboard',
+    text: 'Pick English, Magyar and Svenska together and every letter offers all their accents, on whichever layout you use. Hold the space bar to switch the main language.',
+  },
+  {
+    title: 'Autocorrect you can tune',
+    text: 'Corrections that know which keys are neighbours and where you tapped. Choose Modest, Normal or Aggressive, and undo any correction with one backspace.',
+  },
+  {
+    title: 'Predictions that learn your words',
+    text: 'Completions as you type and the likely next word after a space. Names and new words you use are remembered on the phone; hold one in the suggestion strip to forget it.',
+  },
+  {
+    title: 'Dictionaries for your languages',
+    text: 'English is built in. German, Spanish, French, Italian, Dutch, Polish, Portuguese, Swedish and Hungarian download once and then work offline.',
+  },
+  {
+    title: 'Clipboard and snippets',
+    text: 'Recent clips, pinned clips and your own snippets, a tap away. Passwords copied from a password manager are never kept.',
+  },
+  {
+    title: 'Emoji by name',
+    text: 'Search emoji with the keyboard’s own letters, and type “pizza” to be offered 🍕.',
+  },
+  {
+    title: 'Built for screen readers',
+    text: 'Every key is a TalkBack and VoiceOver button with a spoken label, and accents are there as actions.',
+  },
+  {
+    title: 'Your layout, your size',
+    text: 'QWERTY, QWERTZ, AZERTY, Dvorak, Colemak or Workman, an optional number row, and height and bottom gap set separately for portrait and landscape.',
+  },
+];
+
+const screens = [
+  { src: androidAccents, caption: 'Accents from every selected language', platform: 'Android' },
+  { src: androidSpace, caption: 'Hold the space bar to switch language', platform: 'Android' },
+  { src: androidNextWord, caption: 'Next-word predictions', platform: 'Android' },
+  { src: iosKeyboard, caption: 'The keyboard on iPhone', platform: 'iOS' },
+  { src: iosLanguages, caption: 'Pick your languages', platform: 'iOS' },
+  { src: iosDictionaries, caption: 'Dictionaries per language', platform: 'iOS' },
+  { src: iosClipboard, caption: 'Snippets in the clipboard panel', platform: 'iOS' },
+  { src: iosSpace, caption: 'The space bar names the main language', platform: 'iOS' },
+];
+---
+
+<Base
+  title="MaKeeb: a private keyboard for Android and iOS"
+  description="An on-screen keyboard for Android and iOS that types in several languages at once, with autocorrect and predictions that run entirely on your phone."
+>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <img class="hero-icon" src={icon.src} width="88" height="88" alt="" />
+        <h1>A keyboard for all your languages that keeps what you type to itself.</h1>
+        <p class="lead">
+          MaKeeb is an on-screen keyboard for Android and iOS. Type in several languages on one keyboard, with autocorrect,
+          predictions and learning that all run on your phone.
+        </p>
+        <p class="status">In development: not yet on Google Play or the App Store.</p>
+        <p class="actions">
+          <a class="button" href="#features">See what it does</a>
+          <a class="button ghost" href={`${base}/privacy/`}>Privacy</a>
+        </p>
+      </div>
+      <div class="hero-shots" aria-hidden="true">
+        <Image src={androidAccents} alt="" width={240} densities={[1, 2]} class="shot back" loading="eager" />
+        <Image src={iosSpace} alt="" width={240} densities={[1, 2]} class="shot front" loading="eager" />
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="features">
+    <div class="wrap">
+      <h2>What it does</h2>
+      <p class="lead">The same keyboard on Android and iOS: the typing engine is shared, so it behaves the same on both.</p>
+      <ul class="grid">
+        {
+          features.map((feature) => (
+            <li class="card">
+              <h3>{feature.title}</h3>
+              <p>{feature.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id="screenshots" class="screens">
+    <div class="wrap">
+      <h2>Screenshots</h2>
+      <ul class="gallery">
+        {
+          screens.map((screen) => (
+            <li>
+              <figure>
+                <Image src={screen.src} alt={`${screen.caption} (${screen.platform})`} width={220} densities={[1, 2]} />
+                <figcaption>
+                  {screen.caption}
+                  <span>{screen.platform}</span>
+                </figcaption>
+              </figure>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="privacy">
+    <div class="wrap privacy-box">
+      <h2>Private by design</h2>
+      <p class="lead">
+        No accounts, no ads, no analytics. The keyboard never uses the network; the app only goes online when you download a
+        dictionary.
+      </p>
+      <p><a href={`${base}/privacy/`}>Read the privacy details</a></p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-top: 56px;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .hero-icon {
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+  }
+
+  h1 {
+    font-size: clamp(2rem, 4.6vw, 3.2rem);
+    margin: 24px 0 16px;
+  }
+
+  .status {
+    display: inline-block;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px 14px;
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .button {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--accent-text);
+    font-weight: 600;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+  }
+
+  .button.ghost {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--border);
+  }
+
+  .hero-shots {
+    position: relative;
+    height: 560px;
+  }
+
+  .hero-shots :global(.shot) {
+    position: absolute;
+    width: 240px;
+    border-radius: 28px;
+    border: 6px solid var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  .hero-shots :global(.back) {
+    left: 0;
+    top: 30px;
+    transform: rotate(-5deg);
+  }
+
+  .hero-shots :global(.front) {
+    right: 0;
+    top: 0;
+    transform: rotate(4deg);
+  }
+
+  .grid {
+    list-style: none;
+    padding: 0;
+    margin: 32px 0 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+  }
+
+  .card h3 {
+    margin: 0 0 6px;
+    font-size: 1.08rem;
+  }
+
+  .card p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .screens {
+    background: var(--surface-2);
+  }
+
+  .gallery {
+    list-style: none;
+    padding: 0;
+    margin: 32px 0 0;
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 12px;
+  }
+
+  .gallery li {
+    flex: 0 0 220px;
+    scroll-snap-align: start;
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  .gallery :global(img) {
+    width: 220px;
+    border-radius: 22px;
+    border: 5px solid var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  figcaption {
+    margin-top: 10px;
+    font-size: 0.95rem;
+  }
+
+  figcaption span {
+    display: block;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  .privacy-box {
+    text-align: center;
+  }
+
+  .privacy-box .lead {
+    margin: 0 auto;
+  }
+
+  @media (max-width: 860px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-shots {
+      display: none;
+    }
+  }
+</style>
